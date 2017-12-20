@@ -30,6 +30,6 @@ SHWRealTimeNLSSDK 只能在真机在真机上使用，模拟器上会编译失�
 |SystemConfiguration    |    提供对网络状态检测的支持    |
 |GLKit                  |    内置识别控件所需           |
 |AudioToolbox           |    提供录音和播放支持          |
-
+|sqlite3.0              |    数据存储                |
 
 
