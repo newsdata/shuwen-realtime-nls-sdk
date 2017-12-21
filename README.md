@@ -123,20 +123,20 @@ delegate方法，最终都在主线程中回调。
 /**
 *    @brief    开始朗读时收到的回调。
 *    @param    ttsClient   SWRTTSClient
-*    @param    sentence    speak sentence 语句对应的ID，对应于调用startSpeakText:(NSString *)text的次数
+*    @param    sentence    speak sentence 语句对应的ID
 */
 - (void)ttsClientDidStartSpeak:(SWRTTSClient *)ttsClient sentence:(NSInteger)sentence;
 /**
 *    @brief    结束朗读时收到的回调。
 *    @param    ttsClient   SWRTTSClient
-*    @param    sentence    speak sentence 语句对应的ID，对应于调用startSpeakText:(NSString *)text的次数
+*    @param    sentence    speak sentence 语句对应的ID
 */
 - (void)ttsClientDidFinishSpeak:(SWRTTSClient *)ttsClient sentence:(NSInteger)sentence;
 /**
 *    @brief    出错的回调时收到的回调。
 *    @param    ttsClient   SWRTTSClient
 *    @param    error       出错信息
-*    @param    sentence    speak sentence 语句对应的ID，对应于调用startSpeakText:(NSString *)text的次数
+*    @param    sentence    speak sentence 语句对应的ID
 */
 - (void)ttsClient:(SWRTTSClient *)ttsClient failWithError:(NSError *)error speaking:(NSInteger)sentence;
 @end
