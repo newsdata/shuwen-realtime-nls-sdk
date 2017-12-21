@@ -17,7 +17,6 @@ Pod::Spec.new do |s|
     s.ios.deployment_target = '8.0'
 
     s.source = { :http => 'http://s.newscdn.cn/ios_pod_sdk/realtime_nls/ShuWen_Realtime_NLS_1.0.0.zip' }
-    s.resources    = 'SHWRealTimeNLSSDK/Resource/*'
 
     s.ios.vendored_frameworks = "SHWRealTimeNLSSDK/SHWRealTimeNLS.framework"
     s.ios.vendored_libraries = 'SHWRealTimeNLSSDK/Librarys/libBaiduASR.a', 'SHWRealTimeNLSSDK/Librarys/libBaiduTTS.a'

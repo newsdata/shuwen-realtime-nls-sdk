@@ -9,13 +9,24 @@ Deploy target : iOS 8.0.
 
 ## 2 如何接入
 
-### 1.1 手动下载 SDK
+### 2.1 手动下载 SDK
 
-[点击这里下载](http://s.newscdn.cn/ios_pod_sdk/realtime_nls/ShuWen_Realtime_NLS_1.0.0.zip)
+- [点击这里下载](http://s.newscdn.cn/ios_pod_sdk/realtime_nls/ShuWen_Realtime_NLS_1.0.0.zip)
+- 下载后，可校验 zip 文件，当前文件的
+    - md5:  82712f6a0d87a8b61d1a338f9e22027f
+    - sha1: cf0729b5009cca7665dd33bd31f7d3f5658d5d9a
+- 校验 zip 文件方式：
 
-### 1.2 将下载的 zip 解压缩后拖入项目中
+```shell
+# 查看 md5 值
+md5 ShuWen_Realtime_NLS_1.0.0.zip
+# 查看 sha1 值
+shasum ShuWen_Realtime_NLS_1.0.0.zip
+```
 
-### 1.3 在项目 Build Phases -> Link Binary With libraries 添加以下依赖
+### 2.2 将下载的 zip 解压缩后拖入项目中
+
+### 2.3 在项目 Build Phases -> Link Binary With libraries 添加以下依赖
 
 | Framework | 描述 |
 | --- | --- |
