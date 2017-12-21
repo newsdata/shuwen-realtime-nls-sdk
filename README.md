@@ -183,6 +183,35 @@ delegate方法，最终都在主线程中回调。
 
 ```
 
+### 4.4 离线长录音识别
+
+```
+@interface SWRAudioFileRecognizer : NSObject
+/**
+*    @brief    上传识别的数据
+*    @param    data    待识别音频数据
+*    @param    error   出错信息
+*    @return   提取识别结果时需要的id，error为nil的时候才有效
+*/
+- (NSString *)uploadRecognizeData:(NSData *)data error:(NSError **)error;
+/**
+*    @brief    上传识别文件的路径
+*    @param    filepath    待识别音频文件的路径
+*    @param    error   出错信息
+*    @return   提取识别结果时需要的id，error为nil的时候才有效
+*/
+- (NSString *)uploadRecognizeFilePath:(NSString *)filepath error:(NSError **)error;
+
+/**
+*    @brief    提取识别结果，需要客户端轮询，如果服务端还没有识别成功，返回空串，并附有error信息。
+*    @param    recognizeId    提取识别结果需要传入的id
+*    @param    error   出错信息
+*    @return   识别结果，error为nil的时候才有效
+*/
+- (NSString *)fetchRecoginzeResult:(NSString *)recognizeId error:(NSError **)error;
+@end
+```
+
 ## 5 其它
 
 项目使用了http协议，所以需要适配
