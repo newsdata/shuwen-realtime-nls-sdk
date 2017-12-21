@@ -11,7 +11,7 @@ Deploy target : iOS 8.0.
 
 ### 2.1 手动下载 SDK
 
-- [点击这里下载](http://s.newscdn.cn/ios_pod_sdk/realtime_nls/ShuWen_Realtime_NLS_1.0.0.zip)
+- [点击这里下载](http://newscdn.oss-cn-hangzhou.aliyuncs.com/ios_pod_sdk/realtime_nls/ShuWen_Realtime_NLS_1.0.0.zip)
 - 下载后，可校验 zip 文件，当前文件的
     - md5:  82712f6a0d87a8b61d1a338f9e22027f
     - sha1: cf0729b5009cca7665dd33bd31f7d3f5658d5d9a
