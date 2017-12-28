@@ -1,4 +1,4 @@
-# iOS Voice SDK 接入指南（v1.0.0）
+# iOS Voice SDK 接入指南（v1.0.3）
 
 支持实时语音识别、文本朗读、长录音识别
 Deploy target : iOS 8.0.
@@ -11,17 +11,17 @@ Deploy target : iOS 8.0.
 
 ### 2.1 手动下载 SDK
 
-- [点击这里下载](http://newscdn.oss-cn-hangzhou.aliyuncs.com/ios_pod_sdk/voice_sdk/ShuWen_Voice_1.0.0.zip)
+- [点击这里下载](http://newscdn.oss-cn-hangzhou.aliyuncs.com/ios_pod_sdk/voice_sdk/ShuWen_Voice_1.0.3.zip)
 - 下载后，可校验 zip 文件，当前文件的
-    - md5:  d238da776f358ed0475028e2b355ec3e
-    - sha1: e4e6a4f2a7786b4ef8dd091f3c86e8549ecf6e38
+    - md5:  ecdd1af8d001fc8a5aa141ae4a67dcf8
+    - sha1: 05d66b9eef31201bbebc83b4b8c597f794e419d3
 - 校验 zip 文件方式：
 
 ```shell
 # 查看 md5 值
-md5 ShuWen_Voice_1.0.0.zip
+md5 ShuWen_Voice_1.0.3.zip
 # 查看 sha1 值
-shasum ShuWen_Voice_1.0.0.zip
+shasum ShuWen_Voice_1.0.3.zip
 ```
 
 ### 2.2 使用方法
@@ -38,9 +38,9 @@ shasum ShuWen_Voice_1.0.0.zip
 
 将 `Build Setting` 下 `Other Linker Flags` 中的`-ObjC`和`${inherited}`。
 
-通过pod引入`AFNetworking`和`UTDID`
+通过pod引入`AliyunOSSiOS`和`UTDID`
 ```
-pod 'AFNetworking', '~> 3.1.0'
+pod 'AliyunOSSiOS', '~> 2.8.0'
 pod 'UTDID', '~> 1.0.0'
 ```
 
@@ -205,34 +205,46 @@ delegate方法，最终都在主线程中回调。
 ### 4.4 离线长录音识别
 
 ```
+/**
+*  用于处理长录音的上传与识别
+*  NOTICE: 一个实例同一时间只能上传一个文件。
+*/
 @interface SWRAudioFileRecognizer : NSObject
 /**
 *    @brief    上传识别的数据
 *    @param    data        待识别音频数据
-*    @param    filename    必传，同时会根据文件名获取待识别音频数据的格式类型
+*    @param    audioformat     录音文件格式，m4a，mp3，pcm，amr，opus，wav等
 *    @param    language        ASR识别语音，默认值为"zh-CN"，也支持"en-US"
+*    @param    allowBackgroundUpload   是否允许后台上传，注意如果app没有申请后台网络访问权限，传入YES，可能会引发异常
 *    @param    progressCallback    上传过程中，上传进度的回调，不定期回调
-*    @param    completionHandler   上传完成后的回调，包含提取识别结果时需要的id、错误信息，没有错误时，id才有效
+*    @param    completionHandler   上传完成后的回调，包含提取识别结果时需要的taskId、clientErrMsg、clientCode，clientCode为200表示没有错误，此时的taskId才有效
 */
-- (void)uploadRecognizeData:(NSData *)data filename:(NSString *)filename language:(NSString *)language progress:(void(^)(double progress))progressCallback completionHandler:(void(^)(NSString *recognizeId, NSError * error))completionHandler;
+- (void)uploadRecognizeData:(NSData *)data audioformat:(NSString *)audioformat language:(NSString *)language allowBackgroundUpload:(BOOL)allowBackgroundUpload progress:(void(^)(double progress))progressCallback completionHandler:(void(^)(NSString *taskId, NSString *clientErrMsg, NSInteger clientCode))completionHandler;
+
 /**
 *    @brief    上传识别的数据
 *    @param    filepath    待识别音频文件的路径， 认为uri的最后一段为文件名，并根据文件名获取待识别音频数据的格式类型
+*    @param    audioformat     录音文件格式，m4a，mp3，pcm，amr，opus，wav等
 *    @param    language        ASR识别语音，默认值为"zh-CN"，也支持"en-US"
+*    @param    allowBackgroundUpload   是否允许后台上传，注意如果app没有申请后台网络访问权限，传入YES，可能会引发异常
 *    @param    progressCallback    上传过程中，上传进度的回调，不定期回调
-*    @param    completionHandler   上传完成后的回调，包含提取识别结果时需要的id、错误信息，没有错误时，id才有效
+*    @param    completionHandler   上传完成后的回调，包含提取识别结果时需要的taskId、clientErrMsg、clientCode，clientCode为200表示没有错误，此时的taskId才有效
 */
-- (void)uploadRecognizeFilePath:(NSString *)filepath language:(NSString *)language progress:(void(^)(double progress))progressCallback completionHandler:(void(^)(NSString *recognizeId, NSError * error))completionHandler;
+- (void)uploadRecognizeFilePath:(NSString *)filepath audioformat:(NSString *)audioformat language:(NSString *)language allowBackgroundUpload:(BOOL)allowBackgroundUpload progress:(void(^)(double progress))progressCallback completionHandler:(void(^)(NSString *taskId, NSString *clientErrMsg, NSInteger clientCode))completionHandler;
+
+/**
+*    @brief    取消正在上传文件的上传
+*/
+- (void)cancelUpload;
 
 /**
 *    @brief    提取识别结果，需要客户端轮询，如果服务端还没有识别成功，回调函数中返回空串，并附有error信息。
-*    @param    recognizeId    提取识别结果需要传入的id
-*    @param    completionHandler   回调，包含识别状态、识别结果、错误信息，没有错误时，识别状态为识别完成时，识别结果才有效
+*    @param    taskId    提取识别结果需要传入的id
+*    @param    completionHandler   回调，包含识别状态、识别结果、clientErrMsg、clientCode，clientCode为200表示没有错误、且识别状态为0，此时的识别结果才有效
 status， 0表示已经识别完成; 1表示还未识别，正在排队中; 2表示正在识别中
 result， 识别结果
 */
-- (void)fetchRecoginzeResult:(NSString *)recognizeId completionHandler:(void(^)(NSInteger status, NSString *result, NSError * error))completionHandler;
-@end
+- (void)fetchRecoginzeResult:(NSString *)taskId completionHandler:(void(^)(NSInteger status, NSString *result, NSString *clientErrMsg, NSInteger clientCode))completionHandler;
 ```
 
 
