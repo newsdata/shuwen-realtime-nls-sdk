@@ -129,6 +129,14 @@ delegate方法，最终都在主线程中回调。
 @end
 ```
 
+#### 4.2.1 ASR中值得注意的Error
+目前是透传百度语音SDK返回的error
+
+|错误原因|NSError code|NSError description|备注|
+|--|--|--|--|
+|未能识别出结果|2225219|Server speech quality problem.||
+|识别语音超过60s|2225218|Server speech too long.|此时识别流程，不会收到isComplete为true的回调|
+
 
 ### 4.3 tts, 文字转语音
 
@@ -241,16 +249,19 @@ delegate方法，最终都在主线程中回调。
 *    @brief    提取识别结果，需要客户端轮询，如果服务端还没有识别成功，回调函数中返回空串，并附有error信息。
 *    @param    taskId    提取识别结果需要传入的id
 *    @param    completionHandler   回调，包含识别状态、识别结果、clientErrMsg、clientCode，clientCode为200表示没有错误、且识别状态为0，此时的识别结果才有效
-status， 0表示已经识别完成; 1表示还未识别，正在排队中; 2表示正在识别中
+status， 0表示已经识别完成; 1表示还未识别，正在排队中; 2表示正在识别中；3表示识别失败
 result， 识别结果
 */
 - (void)fetchRecoginzeResult:(NSString *)taskId completionHandler:(void(^)(NSInteger status, NSString *result, NSString *clientErrMsg, NSInteger clientCode))completionHandler;
 ```
 
-## 5 ASR中值得注意的Error
-目前是透传百度语音SDK返回的error
+#### 4.4.1 长录音获取识别结果的status
 
-|错误原因|NSError code|NSError description|备注|
-|--|--|--|--|
-|未能识别出结果|2225219|Server speech quality problem.||
-|识别语音超过60s|2225218|Server speech too long.|此时识别流程，不会收到isComplete为true的回调|
+|status|含义|
+|--|--|
+|0|已经识别完成|
+|1|还未识别，正在排队中|
+|2|正在识别中|
+|3|识别失败|
+
+
