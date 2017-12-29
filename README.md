@@ -247,4 +247,9 @@ result， 识别结果
 - (void)fetchRecoginzeResult:(NSString *)taskId completionHandler:(void(^)(NSInteger status, NSString *result, NSString *clientErrMsg, NSInteger clientCode))completionHandler;
 ```
 
+##5 ASR可能收到的错误，目前是百度语音SDK
 
+|错误原因|NSError code|NSError description|
+|--|--|--|
+|未能识别出结果|2225219|Server speech quality problem.|
+|识别语音超过60s|2225218|Server speech too long.|
