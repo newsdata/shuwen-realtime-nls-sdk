@@ -247,7 +247,8 @@ result， 识别结果
 - (void)fetchRecoginzeResult:(NSString *)taskId completionHandler:(void(^)(NSInteger status, NSString *result, NSString *clientErrMsg, NSInteger clientCode))completionHandler;
 ```
 
-## 5 ASR可能收到的错误，目前是百度语音SDK
+## 5 ASR可能收到的错误
+目前是透传百度语音SDK返回的error
 
 |错误原因|NSError code|NSError description|备注|
 |--|--|--|--|
