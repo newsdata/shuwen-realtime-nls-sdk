@@ -27,8 +27,8 @@ maven {
 maven {  
    url 'http://116.62.222.54/repository/maven-releases/'  
    credentials {  
-      username 'normal-xhcm'
-      password 'XHCM!normal?152'
+      username <username>
+      password <password>
    }  
 }
 ``` 
