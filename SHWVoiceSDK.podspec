@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
     s.name             = 'SHWVoiceSDK'
-    s.version          = '1.0.4'
+    s.version          = '1.0.5'
     s.summary          = '新华智云 SHWVoiceSDK'
     s.description      = 'SHWVoiceSDK 是对百度语音 TTS ASR 静态库的二次封装，并增加了长录音识别'
     s.homepage         = 'https://github.com/newsdata/shuwen-voice-sdk'

@@ -1,4 +1,4 @@
-# iOS Voice SDK 接入指南（v1.0.4）
+# iOS Voice SDK 接入指南（v1.0.5）
 
 支持实时语音识别、文本朗读、长录音识别
 Deploy target : iOS 8.0.
@@ -11,17 +11,17 @@ Deploy target : iOS 8.0.
 
 ### 2.1 手动下载 SDK
 
-- [点击这里下载](http://newscdn.oss-cn-hangzhou.aliyuncs.com/ios_pod_sdk/voice_sdk/ShuWen_Voice_1.0.4.zip)
+- [点击这里下载](http://newscdn.oss-cn-hangzhou.aliyuncs.com/ios_pod_sdk/voice_sdk/ShuWen_Voice_1.0.5.zip)
 - 下载后，可校验 zip 文件，当前文件的
-    - md5:  b1e519a39307ba3cea7896ddb754feeb
-    - sha1: 71a78fd6e43452e9b3c9117f9953c06b3cf73e61
+    - md5: 11146e46e1868c20654365be158e0e61
+    - sha1: af0d697907a97f25974eb740560b586d109cefc7
 - 校验 zip 文件方式：
 
 ```shell
 # 查看 md5 值
-md5 ShuWen_Voice_1.0.4.zip
+md5 ShuWen_Voice_1.0.5.zip
 # 查看 sha1 值
-shasum ShuWen_Voice_1.0.4.zip
+shasum ShuWen_Voice_1.0.5.zip
 ```
 
 ### 2.2 使用方法
@@ -174,6 +174,11 @@ delegate方法，最终都在主线程中回调。
 *    @brief    获取单例。
 */
 + (instancetype)shareInstance;
+/**
+*    @brief    配置Speaker。
+*    @param    speaker    speaker, 默认为BDS_SYNTHESIZER_SPEAKER_MALE_3
+*/
+- (void)setSpeaker:(enum BDSSynthesizerSpeaker)speaker;
 /**
 *    @brief    配置代理。
 *    @param    delegate    delegate
