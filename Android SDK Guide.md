@@ -245,6 +245,23 @@ public interface UploadCallback {
 
 ```
 
+## 自定义配置
+### TTS
+| PARAM_SPEAKER | String, 默认“0” | 普通女声 |
+| --- | --- | --- |
+|  | “1” | 普通男声 |
+|  | “2” | 特别男声 |
+|  | “3” | 情感男声<度逍遥> |
+|  | “4” | 情感儿童声<度丫丫> |
+| PARAM_VOLUME | String, 默认”5” | 在线及离线合成的音量 。范围[“0” - “9”], 不支持小数。 “0” 最轻，”9” 最响。 |
+| PARAM_SPEED | String, 默认”5” | 在线及离线合成的语速 。范围[“0” - “9”], 不支持小数。 “0” 最慢，”9” 最快 |
+| PARAM_PITCH | String, 默认”5” | 在线及离线合成的语调 。范围[“0” - “9”], 不支持小数。 “0” 最低沉， “9” 最尖 |
+|  |  |  |
+|  |  |  |
+
+### ASR
+| ACCEPT_AUDIO_VOLUME | boolean | 是否需要语音音量数据回调，开启后有CALLBACK_EVENT_ASR_VOLUME事件回调 |
+| --- | --- | --- |
 
 
 ## Demo示例
@@ -490,3 +507,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 }
 ```
+
+## 代码混淆
+
+```
+
+# chat-robot sdk
+-keep class com.shuwen.xhchatrobot.sdk.** {*;}
+
+# Utdid
+-keep class com.taobao.** {*;}
+
+# 百度语音
+-keep class com.baidu.speech.**{*;}
+-keep class com.baidu.tts.**{*;}
+-keep class com.baidu.speechsynthesizer.**{*;}
+
+# Retrofit
+-keep class retrofit2.** { *; }
+-dontwarn retrofit2.**
+-keepattributes Signature
+-keepattributes Exceptions
+-dontwarn okio.**
+-dontwarn javax.annotation.**
+
+
+# OkHttp
+-dontwarn okio.**
+-dontwarn okhttp3.**
+-dontwarn javax.annotation.Nullable
+-dontwarn javax.annotation.ParametersAreNonnullByDefault
+
+
+# Okio
+-dontwarn com.squareup.**
+-dontwarn okio.**
+-keep public class org.codehaus.* { *; }
+-keep public class java.nio.* { *; }
+````
+
+
