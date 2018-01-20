@@ -1,4 +1,4 @@
-# iOS Voice SDK 接入指南（v1.0.5）
+# iOS Voice SDK 接入指南（v1.0.6）
 
 支持实时语音识别、文本朗读、长录音识别
 Deploy target : iOS 8.0.
@@ -11,17 +11,17 @@ Deploy target : iOS 8.0.
 
 ### 2.1 手动下载 SDK
 
-- [点击这里下载](http://newscdn.oss-cn-hangzhou.aliyuncs.com/ios_pod_sdk/voice_sdk/ShuWen_Voice_1.0.5.zip)
+- [点击这里下载](http://newscdn.oss-cn-hangzhou.aliyuncs.com/ios_pod_sdk/voice_sdk/ShuWen_Voice_1.0.6.zip)
 - 下载后，可校验 zip 文件，当前文件的
-    - md5: 11146e46e1868c20654365be158e0e61
-    - sha1: af0d697907a97f25974eb740560b586d109cefc7
+    - md5: 66423e8a2a87e5a062b9996d1e932070
+    - sha1: 82884b0e22e9c36632f5ae3bf22f6ad925fe77ed
 - 校验 zip 文件方式：
 
 ```shell
 # 查看 md5 值
-md5 ShuWen_Voice_1.0.5.zip
+md5 ShuWen_Voice_1.0.6.zip
 # 查看 sha1 值
-shasum ShuWen_Voice_1.0.5.zip
+shasum ShuWen_Voice_1.0.6.zip
 ```
 
 ### 2.2 使用方法
