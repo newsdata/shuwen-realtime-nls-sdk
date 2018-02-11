@@ -54,7 +54,16 @@ public class MyApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        IChatRobot.Factory.init(this, "<appid>", "<appkey>", "<secretkey>", "<news_appkey>", "<news_secretkey>");
+        ChatConfig chatConfig = new ChatConfig.Builder()
+                .setBdAppId(<BdAppId>)
+                .setBdAppKey(<BdAppKey>)
+                .setBdSecretKey(<BdSecretKey>)
+                .setsWAppKey(<sWAppKey>)
+                .setsWSecretKey(<sWSecretKey>)
+                .setDebug(true)//设置开发环境
+		.build();
+
+        IChatRobot.Factory.init(appContext, chatConfig);
     }
 }
 ```
