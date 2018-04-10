@@ -553,6 +553,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 -dontwarn okio.**
 -keep public class org.codehaus.* { *; }
 -keep public class java.nio.* { *; }
+
+#analytics
+-keep class com.shuwen.analytics.** { *; }
+-dontwarn java.lang.invoke.*
+
+
+
 ````
 
 
