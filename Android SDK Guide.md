@@ -37,9 +37,9 @@ maven {
 ## 引入依赖  
 
 ```
-compile 'com.shuwen.chatrobot:chatrobot-sdk:1.0.9'  
-// 推荐使用AndPermission动态申请权限
-compile 'com.yanzhenjie:permission:1.1.2'
+compile 'com.shuwen.chatrobot:chatrobot-sdk:1.1.7'  
+// Demo中使用AndPermission动态申请权限
+compile 'com.yanzhenjie:permission:2.0.0-rc4'
 ```
 
 ## 在 Application 中初始化
@@ -277,7 +277,7 @@ public interface UploadCallback {
 
 
 ```text
-public class MainActivity extends AppCompatActivity implements View.OnClickListener, PermissionListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     @BindView(R.id.asr_result)
     TextView asr_result;
@@ -286,7 +286,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private TtsClient ttsClient;
     private AsrClient asrClient;
 
-    private String TAG = "ASR_TEST";
+    private String TAG = "CHAT_TEST";
     private String filePath;
     private String mTaskId;
 
@@ -296,10 +296,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        //为方便测试放了一个音频文件test.m4a在sdcard根目录
+        filePath = new File(Environment.getExternalStorageDirectory(), "test.m4a").getAbsolutePath();
+
+        //初始化问答接口实例，无需权限
+        initChatRobot();
+
+        //为asr功能申请相关权限
         AndPermission.with(this)
-                .requestCode(100)
-                .permission(Permission.MICROPHONE, Permission.STORAGE)
-                .callback(this)
+                .permission(Permission.Group.MICROPHONE)
+                .onGranted(new Action() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+
+                        initAsrClient();
+                    }
+                })
+                .onDenied(new Action() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+
+                        //todo
+
+                    }
+                })
+                .start();
+
+        //为tts功能申请相关权限
+        AndPermission.with(this)
+                .permission(Permission.Group.STORAGE)
+                .onGranted(new Action() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+
+                        initTtsClient();
+                    }
+                })
+                .onDenied(new Action() {
+                    @Override
+                    public void onAction(List<String> permissions) {
+
+                        //todo
+                    }
+                })
                 .start();
     }
 
@@ -310,10 +349,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 startActivity(new Intent(MainActivity.this, TestActivity.class));
                 break;
             case R.id.ask:
-                chatRobot.ask("xxx是谁", 0.0, 0.0, new Callback<JsonObject>() {
+                chatRobot.ask("习近平是谁", 0.0, 0.0, new Callback<JsonObject>() {
                     @Override
                     public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                        Toast.makeText(MainActivity.this, "onResponse", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "onResponse:" + response.body().toString(), Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
@@ -364,7 +403,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 });
                 break;
             case R.id.speak:
-                String text = "今天天气不错，心情挺好的";
+                String text = "这是一段测试文字";
                 ttsClient.ttsSpeak(text);
                 break;
             case R.id.pause:
@@ -403,23 +442,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void initChatRobot() {
 
-        TtsAdapterListener ttsAdapterListener = new TtsAdapterListener(new ITtsListener() {
-            @Override
-            public void onSpeechStart(String s) {
+        chatRobot = IChatRobot.Factory.getInstance();
+    }
 
-            }
-
-            @Override
-            public void onSpeechFinish(String s) {
-
-            }
-
-            @Override
-            public void onError(String s, SpeechError speechError) {
-
-            }
-        });
-
+    private void initAsrClient() {
 
         RecogAdapterListener asrListener = new RecogAdapterListener(new IRecogListener() {
             @Override
@@ -484,37 +510,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         });
 
-        chatRobot = IChatRobot.Factory.getInstance();
-        //TtsConfig ttsConfig = new TtsConfig.Builder().setSpeaker("4").build();
-        ttsClient = IChatRobot.Factory.getTtsClent(this, ttsAdapterListener);
         AsrConfig asrConfig = new AsrConfig.Builder().setAcceptAudioVolume(true).build();
         asrClient = IChatRobot.Factory.getAsrClient(this, asrConfig, asrListener);
     }
 
 
-    @Override
-    public void onSucceed(int requestCode, @NonNull List<String> grantPermissions) {
+    private void initTtsClient() {
 
-        if (requestCode == 100) {
-            initChatRobot();
-
-            File[] files = Environment.getExternalStorageDirectory().listFiles();
-            for (File file : files) {
-                if (file.getName().contains("测试")) {
-                    filePath = file.getAbsolutePath();
-                }
+        TtsAdapterListener ttsAdapterListener = new TtsAdapterListener(new ITtsListener() {
+            @Override
+            public void onSpeechStart(String s) {
+                Log.i(TAG, "onSpeechStart: " + s);
             }
-        }
+
+            @Override
+            public void onSpeechFinish(String s) {
+                Log.i(TAG, "onSpeechFinish: " + s);
+            }
+
+            @Override
+            public void onError(String s, SpeechError speechError) {
+                Log.i(TAG, "onSpeechError: " + s + " " + speechError.description);
+            }
+        });
+
+        //TtsConfig ttsConfig = new TtsConfig.Builder().setSpeaker("4").build();
+        ttsClient = IChatRobot.Factory.getTtsClent(this, ttsAdapterListener);
     }
 
-    @Override
-    public void onFailed(int requestCode, @NonNull List<String> deniedPermissions) {
-
-        if (requestCode == 100) {
-
-        }
-    }
 }
+
 ```
 
 ## 代码混淆
