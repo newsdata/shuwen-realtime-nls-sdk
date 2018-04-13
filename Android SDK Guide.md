@@ -1,7 +1,7 @@
 <!-- TITLE: Android Docs -->
 <!-- SUBTITLE: A quick summary of Android Docs -->
 
-# 智能会话+智能会话 SDK Android 开发文档
+# 智能会话+语音SDK Android 开发文档
 ##  在Manifest中添加权限
 
 ```
