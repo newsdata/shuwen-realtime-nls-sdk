@@ -11,10 +11,10 @@ Deploy target : iOS 8.0.
 
 ### 2.1 手动下载 SDK
 
-- [点击这里下载](http://newscdn.oss-cn-hangzhou.aliyuncs.com/ios_pod_sdk/voice_sdk/ShuWen_Voice_1.0.6.zip)
+- [点击这里下载](http://newscdn.oss-cn-hangzhou.aliyuncs.com/ios_pod_sdk/voice_sdk/ShuWen_Voice_1.0.7.zip)
 - 下载后，可校验 zip 文件，当前文件的
-    - md5: 66423e8a2a87e5a062b9996d1e932070
-    - sha1: 82884b0e22e9c36632f5ae3bf22f6ad925fe77ed
+    - md5: 80410f308dc181fb700911f2715cc688
+    - sha1: 6eebc830b536c2705528052434c4a4323d0d860b
 - 校验 zip 文件方式：
 
 ```shell
@@ -73,7 +73,7 @@ appKey值可从新华智云接口人获取（网站建设中，目前请联系�
 ### 4.1 设置AppKey和AppSecret
 
 ```Objective-C
-[SWRPublicConfig setBaiduAppId:@“Your_AppId” APIKey:@"Your_APIKey" secretKey:@"Your_SecretKey"];
+[SWRPublicConfig setNLSAppId:@“Your_AppId” APIKey:@"Your_APIKey" secretKey:@"Your_SecretKey"];
 [SWRPublicConfig setSWAppKey:@“Your_AppKey” secretKey:@"Your_AppSecret"];
 ```
 
@@ -269,3 +269,9 @@ result， 识别结果
 |2|正在识别中|
 |3|识别失败|
 
+## 5. Change Log
+
+### 2018.12.28
+
+- 更新 TTS SDK 到 2.2.8 , 2018-09-28 版本; 
+- 更新 ASR SDK 到 3.0.5 , 2018-03-01 版本；
