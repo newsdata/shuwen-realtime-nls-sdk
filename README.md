@@ -5,8 +5,9 @@ Deploy target : iOS 8.0.
 
 ## 1 注意：
 
-~~目前只支持真机使用，不支持模拟器，模拟器上编译会报错。~~
 目前已经支持模拟器上使用~
+
+~~目前只支持真机使用，不支持模拟器，模拟器上编译会报错。~~
 
 ## 2 如何接入
 
@@ -20,9 +21,9 @@ Deploy target : iOS 8.0.
 
 ```shell
 # 查看 md5 值
-md5 ShuWen_Voice_1.0.6.zip
+md5 ShuWen_Voice_1.0.7.zip
 # 查看 sha1 值
-shasum ShuWen_Voice_1.0.6.zip
+shasum ShuWen_Voice_1.0.7.zip
 ```
 
 ### 2.2 使用方法
@@ -30,7 +31,7 @@ shasum ShuWen_Voice_1.0.6.zip
 
 项目使用了http协议，所以需要适配
 在`Info.plist`中添加`NSAppTransportSecurity`类型`Dictionary`。
-在`NSAppTransportSecurity`下添加```NSAllowsArbitraryLoads`类型`Boolean`，值设为`YES`。
+在`NSAppTransportSecurity`下添加`NSAllowsArbitraryLoads`类型`Boolean`，值设为`YES`。
 
 项目需要使用麦克风，需要适配
 在`Info.plist`中添加`Privacy - Microphone Usage Description`类型`NSString`。
@@ -131,6 +132,7 @@ delegate方法，最终都在主线程中回调。
 ```
 
 #### 4.2.1 ASR中值得注意的Error
+
 目前是透传百度语音SDK返回的error
 
 |错误原因|NSError code|NSError description|备注|
